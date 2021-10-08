@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="crypto-exampleFlow" doc:id="1f9050ba-38ef-4851-b131-14a2eaeb80d3" >
+		<ee:transform doc:name="Transform Message" doc:id="971e19bc-a74d-4534-a41c-27103b0ec82b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+import dw::Crypto
+output application/json
+---
+{
+	"HmacBinary": Crypto::HMACBinary("keykeykey" as Binary, "Phrase" as Binary ),
+	
+	"HMACWith": Crypto::HMACWith("thekey" as Binary, "Phrase2" as Binary, "HMACSHA256"),
+	
+	"HMACWith512": Crypto::HMACWith("thekey" as Binary, "Phrase2" as Binary, "HMACSHA512"),
+
+	"MD5": Crypto::MD5("PhraseExample123" as Binary),
+	
+	"SHA1": Crypto::SHA1("PhraseExample123" as Binary),
+
+	"hashWith": Crypto::hashWith("PhraseExample123" as Binary,'MD2'),
+
+	"hashWith": Crypto::hashWith("PhraseExample123" as Binary,'MD5'),
+	"hashWith": Crypto::hashWith("PhraseExample123" as Binary,'SHA512'),
+
+	"HelloWorld": 'hello'
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
